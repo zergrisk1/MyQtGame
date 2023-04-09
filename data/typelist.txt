@@ -1,0 +1,14 @@
+hero 1
+basicmonster 2
+strongmonster 7
+mage 10
+goal 3
+block 4
+purpleblock 5
+breakable block 6
+spring block 11
+longblock 8
+herobullet 100
+magebullet 101
+hpitem 200
+stone 201
