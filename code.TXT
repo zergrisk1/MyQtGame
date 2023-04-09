@@ -1,0 +1,136 @@
+淘汰的碰撞检测
+
+if ((hero->y >= blocks[i]->y)&&(hero->y+hero->height < blocks[i]->y+blocks[i]->height))
+                            {
+                                if (hero->x<blocks[i]->x + ui->mainstackedWidget->currentWidget()->x())//1
+                                {
+                                    /*
+                                    正面碰撞1
+                                    设置x位置
+                                    设置水平速度
+                                    */
+                                    hero->x = (blocks[i]->x + ui->mainstackedWidget->currentWidget()->x() - hero->width);
+                                    hero->xspeed = 0;
+                                }
+                                else//3
+                                {
+                                    /*
+                                    正面碰撞3
+                                    设置x位置
+                                    设置水平速度
+                                    */
+                                    hero->x = (blocks[i]->x + ui->mainstackedWidget->currentWidget()->x() +blocks[i]->width);
+                                    hero->xspeed = 0;
+
+                                }
+                            }
+                            else if ((hero->x>=blocks[i]->x + ui->mainstackedWidget->currentWidget()->x())&&(hero->x+hero->width<blocks[i]->x+ ui->mainstackedWidget->currentWidget()->x() +blocks[i]->width))
+                            {
+                                if (hero->y<blocks[i]->y)//2
+                                {
+                                    /*
+                                    正面碰撞2
+                                    设置y位置
+                                    设置垂直速度
+                                    */
+                                    hero->gravityinfluence = false;
+                                    hero->yspeed = 0;
+                                    hero->y = blocks[i]->y - hero->height + 1;
+                                    herogravitydetected = true;
+                                    hero->pixmap.load(HERO_PIXMAP);
+                                    //qDebug()<<"hero x:"<<hero->x;
+                                }
+                                else//4
+                                {
+                                    /*
+                                    正面碰撞4
+                                    设置y位置
+                                    设置垂直速度
+                                    */
+                                    hero->y = blocks[i]->y + blocks[i]->height;
+
+                                    hero->yspeed = -hero->yspeed;
+                                }
+                            }
+                            else if(hero->x <= blocks[i]->x + ui->mainstackedWidget->currentWidget()->x() && hero->y < blocks[i]->y)//5
+                            {
+                                /*
+                                    碰撞面5 （同时碰撞 面1 和 面2 ）
+                                */
+                                if (hero->x + hero->width-blocks[i]->x - ui->mainstackedWidget->currentWidget()->x()> hero->y + hero->height - blocks[i]->y)
+                                {
+                                    /*
+                                        如果碰撞到的2比1多
+                                        设置y坐标
+                                        设置垂直速度
+                                    */
+                                    hero->gravityinfluence = false;
+                                    hero->yspeed = 0;
+                                    hero->y = blocks[i]->y - hero->height + 1;
+                                    herogravitydetected = true;
+                                    hero->pixmap.load(HERO_PIXMAP);
+                                }
+                                else
+                                {
+                                    /*
+                                        如果碰撞到的2比1少
+                                        设置x坐标
+                                        设置水平速度
+                                    */
+                                    hero->x = (blocks[i]->x + ui->mainstackedWidget->currentWidget()->x() - hero->width);
+                                    hero->xspeed = 0;
+                                }
+                            }
+                            else if (hero->x >= blocks[i]->x + ui->mainstackedWidget->currentWidget()->x() && hero->y < blocks[i]->y)//6
+                            {
+                                /*
+                                同理。。。。。。
+                                */
+                                if (blocks[i]->x + ui->mainstackedWidget->currentWidget()->x() +blocks[i]->width-hero->x > hero->y + hero->height - blocks[i]->y)
+                                {
+                                    hero->gravityinfluence = false;
+                                    hero->yspeed = 0;
+                                    hero->y = blocks[i]->y - hero->height + 1;
+                                    herogravitydetected = true;
+                                    hero->pixmap.load(HERO_PIXMAP);
+                                }
+                                else
+                                {
+                                    hero->x = (blocks[i]->x+ ui->mainstackedWidget->currentWidget()->x() +blocks[i]->width);
+                                    hero->xspeed = 0;
+
+                                }
+                            }
+                            else if(hero->x >= blocks[i]->x + ui->mainstackedWidget->currentWidget()->x()&& hero->y > blocks[i]->y)//7
+                            {
+                                if (blocks[i]->x + ui->mainstackedWidget->currentWidget()->x() + blocks[i]->width - hero->x > blocks[i]->y + blocks[i]->height - hero->y)
+                                {
+                                    hero->y = blocks[i]->y + blocks[i]->height;
+                                    hero->yspeed = -hero->yspeed;
+                                    //hero->y -= hero->yspeed;
+                                   // mario->setPositionY(mario->getPositionY()+mario->verticalVelocity);
+
+                                }
+                                else
+                                {
+                                    hero->x = (blocks[i]->x+ ui->mainstackedWidget->currentWidget()->x() + blocks[i]->width);
+                                    hero->xspeed = 0;
+
+                                }
+                            }
+                            else if (hero->x <= blocks[i]->x + ui->mainstackedWidget->currentWidget()->x()&& hero->y > blocks[i]->y)//8
+                            {
+                                if (hero->x + hero->width - blocks[i]->x - ui->mainstackedWidget->currentWidget()->x()> blocks[i]->y + blocks[i]->height - hero->y)
+                                {
+                                    hero->y = blocks[i]->y + blocks[i]->height;
+                                    hero->yspeed = -hero->yspeed;
+                                   // mario->setPositionY(mario->getPositionY()+mario->verticalVelocity);
+
+                                }
+                                else
+                                {
+                                    hero->x = (blocks[i]->x + ui->mainstackedWidget->currentWidget()->x() - hero->width);
+                                    hero->xspeed = 0;
+
+                                }
+                            }
